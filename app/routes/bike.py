@@ -1,6 +1,3 @@
-from crypt import methods
-import json
-from urllib import response
 from flask import Blueprint, jsonify, request, abort, make_response
 from app import db
 from app.models.bike import Bike
