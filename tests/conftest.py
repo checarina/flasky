@@ -3,6 +3,7 @@ from app import create_app
 from app import db
 from flask.signals import request_finished
 from app.models.bike import Bike
+from app.models.cyclist import Cyclist
 
 @pytest.fixture
 def app():
