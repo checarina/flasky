@@ -19,14 +19,17 @@ def create_app(testing = None):
     else:
         app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_TEST_DATABASE_URI")
 
-    db.init_app(app)
-    migrate.init_app(app, db)
-
     from app.models.bike import Bike
     from app.models.cyclist import Cyclist
 
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+ 
+
     from .routes.bike import bike_bp
     app.register_blueprint(bike_bp)
+
     from .routes.cyclist import cyclist_bp
     app.register_blueprint(cyclist_bp)
 
