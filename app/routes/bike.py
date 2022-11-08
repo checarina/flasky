@@ -2,20 +2,6 @@ from flask import Blueprint, jsonify, request, abort, make_response
 from app import db
 from app.models.bike import Bike
 
-# class Bike:
-#     def __init__(self, id, name, price, size, type):
-#         self.id = id
-#         self.name = name
-#         self.price = price
-#         self.size = size
-#         self.type = type
-
-# bikes = [
-#     Bike(5, "Nina", 100, 48, "gravel"),
-#     Bike(8, "Bike 3000", 1000, 50, "hybrid"),
-#     Bike(2, "Auberon", 2000, 52, "electonic")
-# ]
-
 bike_bp = Blueprint("bike_bp", __name__, url_prefix="/bike")
 
 def get_one_bike_or_abort(bike_id):
@@ -53,32 +39,18 @@ def get_all_bikes():
     name_param = request.args.get("name")
     bikes = Bike.query.filter_by(name = name_param)
 
-
     if name_param is None:
         bikes = Bike.query.all()
 
     response = []
     for bike in bikes:
-        bike_dict = {
-            "id": bike.id,
-            "name": bike.name,
-            "price": bike.price,
-            "size": bike.size,
-            "type": bike.type
-        }
-        response.append(bike_dict)
+        response.append(bike.to_dict())
     return jsonify(response), 200
 
 @bike_bp.route("/<bike_id>", methods=["GET"])
 def get_one_bike(bike_id):
-    chosen_bike = get_one_bike_or_abort(bike_id)
-    bike_dict = {
-            "id": chosen_bike.id,
-            "name": chosen_bike.name,
-            "price": chosen_bike.price,
-            "size": chosen_bike.size,
-            "type": chosen_bike.type
-        }
+    select_bike = get_one_bike_or_abort(bike_id)
+    bike_dict = select_bike.to_dict()
     return jsonify(bike_dict), 200
 
 @bike_bp.route("/<bike_id>", methods=["PUT"])

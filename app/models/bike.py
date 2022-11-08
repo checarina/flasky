@@ -9,15 +9,15 @@ class Bike(db.Model):
     cyclist_id = db.Column(db.Integer, db.ForeignKey("cyclist.id"))
     cyclist = db.relationship("Cyclist", back_populates = "bikes")
 
-def to_dict(self):
-    bike_dict = {
-        "id": self.id,
-        "name": self.name,
-        "price": self.price,
-        "size": self.size,
-        "type": self.type
-    }
-    return bike_dict
+    def to_dict(self):
+        bike_dict = {
+            "id": self.id,
+            "name": self.name,
+            "price": self.price,
+            "size": self.size,
+            "type": self.type
+        }
+        return bike_dict
 
     @classmethod
     def from_dict(cls, data_dict):
